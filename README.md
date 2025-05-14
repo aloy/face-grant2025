@@ -1,34 +1,23 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+# Teaching statistical learning: An active approach using R and tidymodels
 
-# face-grant2025
+### USCOTS 2025
 
-<!-- badges: start -->
+Jaime Davila and Adam Loy
 
-<!-- badges: end -->
+------------------------------------------------------------------------
 
-The goal of face-grant2025 is to …
+July 15, 2025 <br> 1:00 – 4:15 pm <br> Location: TBD <br>
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+------------------------------------------------------------------------
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
+## Schedule
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
-
-You can also embed plots, for example:
-
-![](README_files/figure-gfm/pressure-1.png)<!-- -->
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub.
+| Time        | Activity                                |
+|-------------|-----------------------------------------|
+| 1:00 - 1:35 | Introductions and {tidymodels} overview |
+| 1:35 - 2:30 | Activity                                |
+| 2:30 - 2:45 | *Break*                                 |
+| 2:45 - 3:15 | Overview of parameter tuning            |
+| 3:15 - 4:00 | Activity                                |
+| 4:00 - 4:15 | Debrief and Q&A                         |

@@ -2,34 +2,29 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+# Teaching statistical learning: An active approach using R and tidymodels
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+### USCOTS 2025
 
-# face-grant2025
+Jaime Davila and Adam Loy
 
-<!-- badges: start -->
-<!-- badges: end -->
+-----
 
-The goal of face-grant2025 is to ...
+July 15, 2025 <br>
+1:00 -- 4:15 pm <br>
+Location: TBD <br>
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+-----
 
-```{r cars}
-summary(cars)
-```
+## Schedule
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+| Time          | Activity                                                                                |
+| ------------- | --------------------------------------------------------------------------------------- |
+| 1:00 - 1:35 | Introductions and {tidymodels} overview |
+| 1:35 - 2:30 | Activity                                                                          |
+| 2:30 - 2:45 | *Break*                                                                          |
+| 2:45 - 3:15 | Overview of parameter tuning                                                    |
+| 3:15 - 4:00 | Activity              |
+| 4:00 - 4:15 | Debrief and Q&A                                                      |
 
-You can also embed plots, for example:
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub.
