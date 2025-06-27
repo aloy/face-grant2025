@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Jaime Davila and Adam Loy">
+<meta name="dcterms.date" content="2025-06-06">
 
-<title>Teaching statistical learning: An active approach using R and {tidymodels}</title>
+<title>Optimizing parameters using resampling – Teaching statistical learning: An active approach using R and {tidymodels}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,22 +59,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3f13cc09417cf69baaf74afa0e2e3cf6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3f13cc09417cf69baaf74afa0e2e3cf6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -102,7 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -112,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Teaching statistical learning: An active approach using R and {tidymodels}</span>
     </a>
   </div>
@@ -123,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
 </ul>
@@ -137,7 +139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Optimizing parameters using resampling</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -190,60 +192,228 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#teaching-statistical-learning-an-active-approach-using-r-and-tidymodels" id="toc-teaching-statistical-learning-an-active-approach-using-r-and-tidymodels" class="nav-link active" data-scroll-target="#teaching-statistical-learning-an-active-approach-using-r-and-tidymodels">Teaching statistical learning: An active approach using R and {tidymodels}</a>
+  <li><a href="#intending-learning-outcomes" id="toc-intending-learning-outcomes" class="nav-link active" data-scroll-target="#intending-learning-outcomes">Intending Learning Outcomes</a></li>
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
+  <li><a href="#visualizing-different-knn-models" id="toc-visualizing-different-knn-models" class="nav-link" data-scroll-target="#visualizing-different-knn-models">Visualizing different KNN models</a></li>
+  <li><a href="#evaluating-models-using-cross-validation" id="toc-evaluating-models-using-cross-validation" class="nav-link" data-scroll-target="#evaluating-models-using-cross-validation">Evaluating models using cross-validation</a>
   <ul class="collapse">
-  <li><a href="#uscots-2025" id="toc-uscots-2025" class="nav-link" data-scroll-target="#uscots-2025">USCOTS 2025</a></li>
-  <li><a href="#before-the-workshop" id="toc-before-the-workshop" class="nav-link" data-scroll-target="#before-the-workshop">Before the workshop</a></li>
-  <li><a href="#agenda" id="toc-agenda" class="nav-link" data-scroll-target="#agenda">Agenda</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  <li><a href="#creating-a-10-fold-cross-validation" id="toc-creating-a-10-fold-cross-validation" class="nav-link" data-scroll-target="#creating-a-10-fold-cross-validation">Creating a 10-fold cross-validation</a></li>
+  <li><a href="#testing-our-models-using-cross-validation" id="toc-testing-our-models-using-cross-validation" class="nav-link" data-scroll-target="#testing-our-models-using-cross-validation">Testing our models using cross-validation</a></li>
   </ul></li>
+  <li><a href="#new-tidymodels-functions-introduced" id="toc-new-tidymodels-functions-introduced" class="nav-link" data-scroll-target="#new-tidymodels-functions-introduced">New {tidymodels} functions introduced</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Optimizing parameters using resampling</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="teaching-statistical-learning-an-active-approach-using-r-and-tidymodels" class="level1">
-<h1>Teaching statistical learning: An active approach using R and {tidymodels}</h1>
-<section id="uscots-2025" class="level3">
-<h3 class="anchored" data-anchor-id="uscots-2025">USCOTS 2025</h3>
-<p>Jaime Davila and Adam Loy</p>
-<hr>
-<p>July 15, 2025 <br> 1:00 – 4:15 pm <br> Location: Gerdin XXXX <br></p>
-<hr>
-</section>
-<section id="before-the-workshop" class="level2">
-<h2 class="anchored" data-anchor-id="before-the-workshop">Before the workshop</h2>
-<p>Before arriving, please make sure you have an up-to-date installation of R and RStudio, and install the following packages: {tidymodels}, {tidyverse}. You can use the below code chunk to do this.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidymodels"</span>, <span class="st">"tidyverse"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="agenda" class="level2">
-<h2 class="anchored" data-anchor-id="agenda">Agenda</h2>
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jaime Davila and Adam Loy </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 6, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="intending-learning-outcomes" class="level1">
+<h1>Intending Learning Outcomes</h1>
 <ul>
-<li>Introductions</li>
-<li>Overview of {tidymodels}</li>
-<li>Activity: KNN for regression/prediction</li>
-<li>Activity: KNN for classification</li>
-<li>Break</li>
-<li>Overview of parameter tuning via cross validation and activity</li>
-<li>Overview of grid search and activity</li>
-<li>Debrief and Q&amp;A</li>
+<li>Uses visualization to see the effect of K in a KNN classification.</li>
+<li>Recognize the need for cross-validation and is able to construct and interact with cross-validation datasets.</li>
+<li>Uses cross-validation to evaluate performance metrics across multiple models.</li>
 </ul>
 </section>
-<section id="resources" class="level2">
-<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<section id="dataset" class="level1">
+<h1>Dataset</h1>
+<p>To start, let’s load the Scooby-Doo dataset and quickly divide it into training and testing sets:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>scooby <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"scooby.csv"</span>, <span class="at">col_types =</span> <span class="st">"ddfcd"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>scooby_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(scooby, <span class="at">prop =</span> <span class="fl">0.75</span>, <span class="at">strata =</span> monster_real)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>scooby_train <span class="ot">&lt;-</span> <span class="fu">training</span>(scooby_split)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>scooby_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(scooby_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizing-different-knn-models" class="level1">
+<h1>Visualizing different KNN models</h1>
+<p>Let’s visualize an approximate decision boundary of a KNN model as we change the value of <code>k</code>. To do this, we proceed in two steps:</p>
 <ul>
-<li><a href="https://www.tidymodels.org/">{tidymodels} website</a>: The official website for the {tidymodels} ecosystem</li>
-<li><a href="https://www.tmwr.org/">Tidy Modeling with R</a>: Book by Max Kuhn and Julia Silge</li>
-<li><a href="https://juliasilge.com/blog/">Julia Silge’s blog</a>: Blog posts on various {tidymodels} topics</li>
-<li><a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday</a></li>
+<li>We define the function <code>create_knn_wf()</code> that receives <code>k</code> and a <code>train</code>ing (Scooby-Doo) dataset and creates a workflow for a KNN model</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>create_knn_wf <span class="ot">&lt;-</span> <span class="cf">function</span> (k, train) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Model specification</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  knn_spec <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> k) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"kknn"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recipe definition</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  knn_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(monster_real <span class="sc">~</span> imdb <span class="sc">+</span> year_aired, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> train) <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">step_naomit</span>(<span class="fu">all_predictors</span>())</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Workflow definition</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  knn_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_recipe</span>(knn_recipe) <span class="sc">|&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_model</span>(knn_spec)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>We define the function <code>plot_boundary()</code> to create a grid with range of valid values for <code>year_aired</code> and <code>imdb</code> and evaluates the specified <code>model</code>, producing a visualization of the decision boundary</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plot_boundary <span class="ot">&lt;-</span> <span class="cf">function</span> (model) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  scooby_grid <span class="ot">&lt;-</span> <span class="fu">expand_grid</span> (<span class="at">year_aired=</span><span class="dv">1969</span><span class="sc">:</span><span class="dv">2020</span>, <span class="at">imdb=</span><span class="fu">seq</span>(<span class="dv">4</span>,<span class="dv">10</span>,<span class="at">by=</span>.<span class="dv">1</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(model, scooby_grid)<span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(year_aired, imdb, <span class="at">fill =</span> .pred_class)) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_raster</span>()<span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scooby Doo Monsters"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year aired"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"IMDB rating"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Monster type"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Your turn 1</strong>: Using <code>k = 3</code>, plot the decision boundary of your KNN model by leveraging <code>create_knn_wf()</code> and <code>plot_boundary()</code>. Remember that <code>create_knn_wf()</code> creates a workflow, which you still need to <strong>fit</strong> in order to create a model.</p>
+<p><strong>Your turn 2</strong>: Plot your decision boundary for k = 10, 50, 150. Discuss with your neighbor the effect changing <code>k</code> has on your decision boundary.</p>
+</section>
+<section id="evaluating-models-using-cross-validation" class="level1">
+<h1>Evaluating models using cross-validation</h1>
+<p>We would like to find the optimal value of k for our KNN model. One way to do this would be to train different models using different values of k and then evaluate the performance of each model using our testing dataset. The main problem with this approach is that we are repeatedly looking at our testing dataset which can result in <em>overfitting</em> our model.</p>
+<p>However, this idea can be refined by dividing our training dataset into multiple training/testing datasets. A good explanation of how cross-validation works is found in <a href="http://rafalab.dfci.harvard.edu/dsbook-part-2/ml/resampling-methods.html#cross-validation">Introduction to Data Science</a>.</p>
+<section id="creating-a-10-fold-cross-validation" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-10-fold-cross-validation">Creating a 10-fold cross-validation</h2>
+<p>Let’s start creating a 10-fold cross-validation data set called <code>scooby_folds</code> by leveraging the function <code>vfold_cv()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>(scooby_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(scooby_train, <span class="at">v =</span> <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#  10-fold cross-validation 
+# A tibble: 10 × 2
+   splits           id    
+   &lt;list&gt;           &lt;chr&gt; 
+ 1 &lt;split [337/38]&gt; Fold01
+ 2 &lt;split [337/38]&gt; Fold02
+ 3 &lt;split [337/38]&gt; Fold03
+ 4 &lt;split [337/38]&gt; Fold04
+ 5 &lt;split [337/38]&gt; Fold05
+ 6 &lt;split [338/37]&gt; Fold06
+ 7 &lt;split [338/37]&gt; Fold07
+ 8 &lt;split [338/37]&gt; Fold08
+ 9 &lt;split [338/37]&gt; Fold09
+10 &lt;split [338/37]&gt; Fold10</code></pre>
+</div>
+</div>
+<p><code>scooby_folds</code> is a tibble with 2 columns (<code>splits</code> and <code>id</code>) and 10 rows. The <code>id</code> column gives us the name of the corresponding fold (or resample), while <code>splits</code> has a more complex datatype containing the training/testing dataset. In the next exercise we will learn a few more details about it.</p>
+<p><strong>Your turn 3</strong>:</p>
+<ul>
+<li>Use the function <code>get_rsplit()</code> (make sure to view the documentation using <code>?get_rsplit</code>) to get the second fold from <code>scooby_folds</code>, store the result in <code>scooby_fold_02</code>, and use the function <code>class()</code> (type) of <code>scooby_fold_02</code>.</li>
+<li>Have you seen the class <code>rsplit</code> before?</li>
+<li>What is the class of <code>scooby_split</code>? (Remember first code chunk in the <code>Dataset</code> section)</li>
+</ul>
+<p><strong>Your turn 4</strong>:</p>
+<ul>
+<li>Use the <code>testing()</code> and <code>training()</code> functions to extract the testing and training dataset from <code>scooby_fold_02</code>?</li>
+<li>How big are your training/testing datasets? Does that correspond to the information from the second row of <code>scooby_folds</code>?</li>
+</ul>
+</section>
+<section id="testing-our-models-using-cross-validation" class="level2">
+<h2 class="anchored" data-anchor-id="testing-our-models-using-cross-validation">Testing our models using cross-validation</h2>
+<p>Let’s start by creating a KNN using <code>k = 3</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>scooby_knn_wf1 <span class="ot">&lt;-</span> <span class="fu">create_knn_wf</span>(<span class="dv">3</span>, scooby_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The function <code>fit_resamples()</code> allows you to fit a workflow using the 10 different training/testing datasets that are stored in <code>scooby_fold</code>. Let’s see it in action:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_resamples</span>(scooby_knn_wf1, scooby_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Resampling results
+# 10-fold cross-validation 
+# A tibble: 10 × 4
+   splits           id     .metrics         .notes          
+   &lt;list&gt;           &lt;chr&gt;  &lt;list&gt;           &lt;list&gt;          
+ 1 &lt;split [337/38]&gt; Fold01 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 2 &lt;split [337/38]&gt; Fold02 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 3 &lt;split [337/38]&gt; Fold03 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 4 &lt;split [337/38]&gt; Fold04 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 5 &lt;split [337/38]&gt; Fold05 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 6 &lt;split [338/37]&gt; Fold06 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 7 &lt;split [338/37]&gt; Fold07 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 8 &lt;split [338/37]&gt; Fold08 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+ 9 &lt;split [338/37]&gt; Fold09 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;
+10 &lt;split [338/37]&gt; Fold10 &lt;tibble [3 × 4]&gt; &lt;tibble [0 × 3]&gt;</code></pre>
+</div>
+</div>
+<p>Notice that the output is 10 by 4 tibble, where three of the columns have nested tibbles inside. An easier way to interact with this dataset is by using the function <code>collect_metrics()</code> which summarizes some performance metrics across our cross-validation dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_resamples</span>(scooby_knn_wf1, scooby_folds) <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  .metric     .estimator  mean     n std_err .config             
+  &lt;chr&gt;       &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+1 accuracy    binary     0.848    10  0.0287 Preprocessor1_Model1
+2 brier_class binary     0.118    10  0.0215 Preprocessor1_Model1
+3 roc_auc     binary     0.857    10  0.0331 Preprocessor1_Model1</code></pre>
+</div>
+</div>
+<p>It seems however that the default metrics don’t include specificity and sensitivity so we will create a new set of metrics using <code>metric_set</code>, which we add as a parameter in <code>fit_resamples()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>multi_metric <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, sens, spec)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_resamples</span>(scooby_knn_wf1, scooby_folds, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">metrics =</span> multi_metric) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  .metric  .estimator  mean     n std_err .config             
+  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+1 accuracy binary     0.848    10  0.0287 Preprocessor1_Model1
+2 sens     binary     0.934    10  0.0209 Preprocessor1_Model1
+3 spec     binary     0.552    10  0.0521 Preprocessor1_Model1</code></pre>
+</div>
+</div>
+<p><strong>Your turn 5</strong>: Using your 10-fold cross validations evaluate your accuracy, sensitivity and specificity for KNN models using k = 10, 50, 150.</p>
+<ul>
+<li>Which value would you use to maximize accuracy?</li>
+<li>How about sensitivity?</li>
+</ul>
+</section>
+</section>
+<section id="new-tidymodels-functions-introduced" class="level1">
+<h1>New {tidymodels} functions introduced</h1>
+<ul>
+<li><code>vfold_cv()</code>: Creates a cross-validation dataset</li>
+<li><code>fit_resamples()</code>: Fits a workflow on a cross-validation (or a resampling) dataset</li>
+<li><code>collect_metrics()</code>: Creates a summary of the performance metrics after using <code>fit_resamples</code></li>
+<li><code>metric_set()</code>: Allows to group specific performance metrics for use with <code>fit_resamples</code></li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

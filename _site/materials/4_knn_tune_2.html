@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Jaime Davila and Adam Loy">
 
-<title>Teaching statistical learning: An active approach using R and {tidymodels}</title>
+<title>Parameter Tuning: A KNN Example – Teaching statistical learning: An active approach using R and {tidymodels}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,22 +58,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3f13cc09417cf69baaf74afa0e2e3cf6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3f13cc09417cf69baaf74afa0e2e3cf6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -102,7 +103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -112,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Teaching statistical learning: An active approach using R and {tidymodels}</span>
     </a>
   </div>
@@ -123,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
 </ul>
@@ -137,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Parameter Tuning: A KNN Example</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -190,60 +191,188 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#teaching-statistical-learning-an-active-approach-using-r-and-tidymodels" id="toc-teaching-statistical-learning-an-active-approach-using-r-and-tidymodels" class="nav-link active" data-scroll-target="#teaching-statistical-learning-an-active-approach-using-r-and-tidymodels">Teaching statistical learning: An active approach using R and {tidymodels}</a>
-  <ul class="collapse">
-  <li><a href="#uscots-2025" id="toc-uscots-2025" class="nav-link" data-scroll-target="#uscots-2025">USCOTS 2025</a></li>
-  <li><a href="#before-the-workshop" id="toc-before-the-workshop" class="nav-link" data-scroll-target="#before-the-workshop">Before the workshop</a></li>
-  <li><a href="#agenda" id="toc-agenda" class="nav-link" data-scroll-target="#agenda">Agenda</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
-  </ul></li>
+  <li><a href="#intended-learning-outcomes" id="toc-intended-learning-outcomes" class="nav-link active" data-scroll-target="#intended-learning-outcomes">Intended Learning Outcomes</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#tuning-a-knn-model" id="toc-tuning-a-knn-model" class="nav-link" data-scroll-target="#tuning-a-knn-model">Tuning a KNN Model</a></li>
+  <li><a href="#other-1-se-for-optimizing-parameters" id="toc-other-1-se-for-optimizing-parameters" class="nav-link" data-scroll-target="#other-1-se-for-optimizing-parameters">Other 1 SE for optimizing parameters</a></li>
+  <li><a href="#usemodels-for-parameter-optimization" id="toc-usemodels-for-parameter-optimization" class="nav-link" data-scroll-target="#usemodels-for-parameter-optimization">{usemodels} for parameter optimization</a></li>
+  <li><a href="#functions-used" id="toc-functions-used" class="nav-link" data-scroll-target="#functions-used">Functions used</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Parameter Tuning: A KNN Example</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="teaching-statistical-learning-an-active-approach-using-r-and-tidymodels" class="level1">
-<h1>Teaching statistical learning: An active approach using R and {tidymodels}</h1>
-<section id="uscots-2025" class="level3">
-<h3 class="anchored" data-anchor-id="uscots-2025">USCOTS 2025</h3>
-<p>Jaime Davila and Adam Loy</p>
-<hr>
-<p>July 15, 2025 <br> 1:00 – 4:15 pm <br> Location: Gerdin XXXX <br></p>
-<hr>
-</section>
-<section id="before-the-workshop" class="level2">
-<h2 class="anchored" data-anchor-id="before-the-workshop">Before the workshop</h2>
-<p>Before arriving, please make sure you have an up-to-date installation of R and RStudio, and install the following packages: {tidymodels}, {tidyverse}. You can use the below code chunk to do this.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidymodels"</span>, <span class="st">"tidyverse"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="agenda" class="level2">
-<h2 class="anchored" data-anchor-id="agenda">Agenda</h2>
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jaime Davila and Adam Loy </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="intended-learning-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="intended-learning-outcomes">Intended Learning Outcomes</h2>
+<p>By the end of this activity, you will be able to:</p>
 <ul>
-<li>Introductions</li>
-<li>Overview of {tidymodels}</li>
-<li>Activity: KNN for regression/prediction</li>
-<li>Activity: KNN for classification</li>
-<li>Break</li>
-<li>Overview of parameter tuning via cross validation and activity</li>
-<li>Overview of grid search and activity</li>
-<li>Debrief and Q&amp;A</li>
+<li>Tune the parameters of a KNN model using cross validation</li>
+<li>Explore the results of the tuning process</li>
+<li>Finalize a KNN model workflow with the selected parameter values</li>
 </ul>
 </section>
-<section id="resources" class="level2">
-<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Now that you know how to fit KNN models and how to conduct cross validation to estimate their out-of-bag performance, it’s time to explore how to tune the parameters of a KNN model using the functionality of the {tidymodels} ecosystem.</p>
+<p>In this activity we’ll revisit the Scooby Doo data set and use it to build a KNN model that predicts whether a monster is real or not. Our goal is to select the “best” value for the number of neighbors,<code>k</code>. To begin, let’s load in the data and create our training and testing splits:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>scooby <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"scooby.csv"</span>, <span class="at">col_types=</span><span class="st">"ddfcd"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>scooby_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(scooby, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                              <span class="at">prop =</span> <span class="fl">0.75</span>, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">strata =</span> monster_real)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>scooby_train <span class="ot">&lt;-</span> <span class="fu">training</span>(scooby_split)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>scooby_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(scooby_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="tuning-a-knn-model" class="level2">
+<h2 class="anchored" data-anchor-id="tuning-a-knn-model">Tuning a KNN Model</h2>
+<p>To tune a model, we must first define our model, which includes specifying the recipe and the model specification, and then combining these components into a workflow. There is one key change required, however, to perform parameter tuning: we need to use the <code>tune()</code> function to indicate which parameter we want to tune in our model specification. In the case of KNN, we set <code>neighbors = tune()</code> rather than setting it to a specific value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recipe definition</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>knn_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(monster_real <span class="sc">~</span> imdb <span class="sc">+</span> year_aired, <span class="at">data =</span> scooby_train) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_naomit</span>(<span class="fu">all_predictors</span>())</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Model specification</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>knn_spec <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Workflow definition</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>knn_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(knn_recipe) <span class="sc">|&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(knn_spec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, we need to create our cross-validation splits. In this example, let’s use 5-fold cross-validation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-validation splits</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>scooby_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(scooby_train, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">strata =</span> monster_real)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We also need to create a grid of values for the <code>neighbors</code> parameter, for example from 1 to 21 (odds only), using the <code>grid_regular()</code> function. We then pass this grid to the <code>tune_grid()</code> function along with our workflow and cross-validation folds. When tuning a single parameter you could also create a tibble with the values you want to test, but using <code>grid_regular()</code> is a convenient way to generate a range of values and makes tuning multiple parameters easier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>k_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">neighbors</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">21</span>)), <span class="at">levels =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note: {tidymodels} does have functionality to automatically generate candidate parameter grids for many models; however, it’s better to manually specify the values when you are first learning to reinforce your understanding of the parameters and their impact on model performance.</p>
+<p>With the grid defined, we can now perform the tuning process by passing in the workflow, the cross-validation folds, and the grid of values to the <code>tune_grid()</code> function. We also specify the metrics we will use to evaluate the model’s performance, such as accuracy, sensitivity, and specificity. Recall that we use the <code>metric_set()</code> to combine multiple metrics into a single object that can be passed to the tuning function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>scooby_tune <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  knn_wflow,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> scooby_folds,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> k_grid,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy, sens, spec)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To collect the results of the tuning process, we use the <code>collect_metrics()</code> function. This returns a tibble with the performance metrics for each value of <code>k</code> that was explored.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(scooby_tune_results <span class="ot">&lt;-</span> <span class="fu">collect_metrics</span>(scooby_tune))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 7
+   neighbors .metric  .estimator  mean     n std_err .config              
+       &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                
+ 1         1 accuracy binary     0.835     5  0.0186 Preprocessor1_Model01
+ 2         1 sens     binary     0.917     5  0.0253 Preprocessor1_Model01
+ 3         1 spec     binary     0.549     5  0.0267 Preprocessor1_Model01
+ 4         3 accuracy binary     0.827     5  0.0172 Preprocessor1_Model02
+ 5         3 sens     binary     0.914     5  0.0225 Preprocessor1_Model02
+ 6         3 spec     binary     0.525     5  0.0386 Preprocessor1_Model02
+ 7         5 accuracy binary     0.843     5  0.0194 Preprocessor1_Model03
+ 8         5 sens     binary     0.918     5  0.0199 Preprocessor1_Model03
+ 9         5 spec     binary     0.585     5  0.0391 Preprocessor1_Model03
+10         7 accuracy binary     0.875     5  0.0121 Preprocessor1_Model04
+# ℹ 20 more rows</code></pre>
+</div>
+</div>
+<p><strong>Your turn 1</strong>: Explore the results of 5-fold cross validation for the various values of <code>k</code>. What is the best value of <code>k</code> based on the accuracy metric? How does this value compare to the sensitivity and specificity metrics?</p>
+<p>It can be tedious to explore the table of results manually, particularly if you have many parameters to tune. To quickly visualize the results we use the <code>autoplot()</code> function from the {tune} package. This function will create a plot of the performance metrics for each value of our parameters, allowing us to quickly identify the best performing model.</p>
+<p><strong>Your turn 2</strong>: Use the <code>autoplot()</code> function to visualize the results of the tuning process. What does the plot tell you about the relationship between the number of neighbors and the model’s performance?</p>
+<p>If your goal is to select the “best” value of <code>k</code>, you can use the <code>select_best()</code> function to extract the best performing parameter value based on a specific metric. For example, if you want to select the best value of <code>k</code> based on accuracy, you can do the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>best_k <span class="ot">&lt;-</span> <span class="fu">select_best</span>(scooby_tune, <span class="at">metric =</span> <span class="st">"accuracy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will return a tibble with the best value of <code>k</code> and its corresponding accuracy.</p>
+<p><strong>Your turn 3</strong>: What is the best value of <code>k</code> based on sensitivity? For specificity?</p>
+<p>Once you have determined what value of <code>k</code> to use, you can <strong>finalize</strong> your model.</p>
+</section>
+<section id="other-1-se-for-optimizing-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="other-1-se-for-optimizing-parameters">Other 1 SE for optimizing parameters</h2>
+<p>Often there are many values of <code>k</code> that yield similar performance. In these cases, it can be beneficial to select a model that is easier to interpret and less likely to overfit the training data. One common approach is the “one standard error” rule, which selects the simplest model whose performance is within one standard error of the best performing model. This can be done using the <code>select_by_one_std_err()</code> function, which takes the results of <code>tune_grid()</code>, the name of the performance metric (as a character string), and the parameter(s) to optimize (unquoted).</p>
+<p><strong>Your turn 4</strong>: What value of <code>k</code> is selected using the one standard error rule based on sensitivity? For specificity?</p>
+<p><strong>Your turn 5</strong>: Finalize the model using the value of <code>k</code> selected by the one standard error rule based on accuracy. How does this model perform on the test data compared to the model selected by the best accuracy?</p>
+</section>
+<section id="usemodels-for-parameter-optimization" class="level2">
+<h2 class="anchored" data-anchor-id="usemodels-for-parameter-optimization">{usemodels} for parameter optimization</h2>
+<p>It can be rather tedious to type out all the code required to tune a starting from the recipe. The {usemodels} package implements model skeletons for a few commonly used models, including KNN. Given a formula and data set it will create the recipe, model specification, and workflow for you. It also sets the framework for tuning the model with helpful reminders of the components you should think carefully about.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usemodels)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_kknn</span>(monster_real <span class="sc">~</span> imdb <span class="sc">+</span> year_aired, <span class="at">data =</span> scooby)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>kknn_recipe &lt;- 
+  recipe(formula = monster_real ~ imdb + year_aired, data = scooby) %&gt;% 
+  step_zv(all_predictors()) %&gt;% 
+  step_normalize(all_numeric_predictors()) 
+
+kknn_spec &lt;- 
+  nearest_neighbor(neighbors = tune(), weight_func = tune()) %&gt;% 
+  set_mode("classification") %&gt;% 
+  set_engine("kknn") 
+
+kknn_workflow &lt;- 
+  workflow() %&gt;% 
+  add_recipe(kknn_recipe) %&gt;% 
+  add_model(kknn_spec) 
+
+set.seed(68778)
+kknn_tune &lt;-
+  tune_grid(kknn_workflow, resamples = stop("add your rsample object"), grid = stop("add number of candidate points"))</code></pre>
+</div>
+</div>
+<p><strong>Your turn 6</strong>: What two objects do you need to define in order to run the tuning process using the {usemodels} package? What alterations to the code are needed?</p>
+</section>
+<section id="functions-used" class="level1">
+<h1>Functions used</h1>
 <ul>
-<li><a href="https://www.tidymodels.org/">{tidymodels} website</a>: The official website for the {tidymodels} ecosystem</li>
-<li><a href="https://www.tmwr.org/">Tidy Modeling with R</a>: Book by Max Kuhn and Julia Silge</li>
-<li><a href="https://juliasilge.com/blog/">Julia Silge’s blog</a>: Blog posts on various {tidymodels} topics</li>
-<li><a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday</a></li>
+<li><code>grid_regular()</code>: Generates a regular grid of parameter values for tuning.</li>
+<li><code>tune_grid()</code>: Performs tuning of a model using cross-validation and a grid of parameter values.</li>
+<li><code>autoplot()</code>: Visualizes the results of the tuning process, showing performance metrics for different parameter values.</li>
+<li><code>select_best()</code>, <code>select_by_one_std_err()</code>: Functions to select the best parameter values based on a specific metric or the one standard error rule.</li>
+<li><code>finalize_workflow()</code>: Finalizes a workflow with the best parameter values selected from tuning.</li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
