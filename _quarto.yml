@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "Teaching statistical learning: An active approach using R and tidymodels"
+  title: "Teaching statistical learning: An active approach using R and {tidymodels}"
   navbar:
     left:
       - href: index.qmd

@@ -1,5 +1,5 @@
 
-# Teaching statistical learning: An active approach using R and tidymodels
+# Teaching statistical learning: An active approach using R and {tidymodels}
 
 ### USCOTS 2025
 
@@ -7,17 +7,37 @@ Jaime Davila and Adam Loy
 
 ------------------------------------------------------------------------
 
-July 15, 2025 <br> 1:00 – 4:15 pm <br> Location: TBD <br>
+July 15, 2025 <br> 1:00 – 4:15 pm <br> Location: Gerdin XXXX <br>
 
 ------------------------------------------------------------------------
 
-## Schedule
+## Before the workshop
 
-| Time        | Activity                                |
-|-------------|-----------------------------------------|
-| 1:00 - 1:35 | Introductions and {tidymodels} overview |
-| 1:35 - 2:30 | Activity                                |
-| 2:30 - 2:45 | *Break*                                 |
-| 2:45 - 3:15 | Overview of parameter tuning            |
-| 3:15 - 4:00 | Activity                                |
-| 4:00 - 4:15 | Debrief and Q&A                         |
+Before arriving, please make sure you have an up-to-date installation of
+R and RStudio, and install the following packages: {tidymodels},
+{tidyverse}. You can use the below code chunk to do this.
+
+``` r
+install.packages(c("tidymodels", "tidyverse"))
+```
+
+## Agenda
+
+- Introductions
+- Overview of {tidymodels}
+- Activity: KNN for regression/prediction
+- Activity: KNN for classification
+- Break
+- Overview of parameter tuning via cross validation and activity
+- Overview of grid search and activity
+- Debrief and Q&A
+
+## Resources
+
+- [{tidymodels} website](https://www.tidymodels.org/): The official
+  website for the {tidymodels} ecosystem
+- [Tidy Modeling with R](https://www.tmwr.org/): Book by Max Kuhn and
+  Julia Silge
+- [Julia Silge’s blog](https://juliasilge.com/blog/): Blog posts on
+  various {tidymodels} topics
+- [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday)
