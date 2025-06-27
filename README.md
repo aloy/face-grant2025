@@ -32,6 +32,17 @@ install.packages(c("tidymodels", "tidyverse"))
 - Overview of grid search and activity
 - Debrief and Q&A
 
+## Workshop materials
+
+You can access the materials either through the Google drive folder or
+the Github repo. Choose what you’re most comfortable with. We recommend
+creating a new RStudio project (.Rproj) for the workshop so that it’s
+easy to store the data and .Rmd files in the same directory.
+
+- Google drive folder with all materials:
+  <https://tinyurl.com/USCOTS2025>
+- Github repo
+
 ## Resources
 
 - [{tidymodels} website](https://www.tidymodels.org/): The official
