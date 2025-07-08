@@ -7,7 +7,8 @@ Jaime Davila and Adam Loy
 
 ------------------------------------------------------------------------
 
-July 15, 2025 <br> 1:00 – 4:15 pm <br> Location: Gerdin XXXX <br>
+July 15, 2025 <br> 1:00 – 4:15 pm <br> Location: Gerdin Business
+Building, Room 2464 <br>
 
 ------------------------------------------------------------------------
 
