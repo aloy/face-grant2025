@@ -1,8 +1,6 @@
 ---
-output: github_document
+title: "Teaching statistical learning: An active approach using R and {tidymodels}"
 ---
-
-# Teaching statistical learning: An active approach using R and {tidymodels}
 
 ### USCOTS 2025
 
