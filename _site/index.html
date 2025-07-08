@@ -137,7 +137,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Teaching statistical learning: An active approach using R and {tidymodels}</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -190,35 +190,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#teaching-statistical-learning-an-active-approach-using-r-and-tidymodels" id="toc-teaching-statistical-learning-an-active-approach-using-r-and-tidymodels" class="nav-link active" data-scroll-target="#teaching-statistical-learning-an-active-approach-using-r-and-tidymodels">Teaching statistical learning: An active approach using R and {tidymodels}</a>
-  <ul class="collapse">
-  <li><a href="#uscots-2025" id="toc-uscots-2025" class="nav-link" data-scroll-target="#uscots-2025">USCOTS 2025</a></li>
+  <li><a href="#uscots-2025" id="toc-uscots-2025" class="nav-link active" data-scroll-target="#uscots-2025">USCOTS 2025</a></li>
   <li><a href="#before-the-workshop" id="toc-before-the-workshop" class="nav-link" data-scroll-target="#before-the-workshop">Before the workshop</a></li>
   <li><a href="#agenda" id="toc-agenda" class="nav-link" data-scroll-target="#agenda">Agenda</a></li>
+  <li><a href="#workshop-materials" id="toc-workshop-materials" class="nav-link" data-scroll-target="#workshop-materials">Workshop materials</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Teaching statistical learning: An active approach using R and {tidymodels}</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="teaching-statistical-learning-an-active-approach-using-r-and-tidymodels" class="level1">
-<h1>Teaching statistical learning: An active approach using R and {tidymodels}</h1>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <section id="uscots-2025" class="level3">
 <h3 class="anchored" data-anchor-id="uscots-2025">USCOTS 2025</h3>
 <p>Jaime Davila and Adam Loy</p>
 <hr>
-<p>July 15, 2025 <br> 1:00 – 4:15 pm <br> Location: Gerdin XXXX <br></p>
+<p>July 15, 2025 <br> 1:00 – 4:15 pm <br> Location: Gerdin Business Building, Room 2464 <br></p>
 <hr>
 </section>
 <section id="before-the-workshop" class="level2">
 <h2 class="anchored" data-anchor-id="before-the-workshop">Before the workshop</h2>
 <p>Before arriving, please make sure you have an up-to-date installation of R and RStudio, and install the following packages: {tidymodels}, {tidyverse}. You can use the below code chunk to do this.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidymodels"</span>, <span class="st">"tidyverse"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidymodels"</span>, <span class="st">"tidyverse"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="agenda" class="level2">
 <h2 class="anchored" data-anchor-id="agenda">Agenda</h2>
@@ -233,8 +247,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Debrief and Q&amp;A</li>
 </ul>
 </section>
+<section id="workshop-materials" class="level2">
+<h2 class="anchored" data-anchor-id="workshop-materials">Workshop materials</h2>
+<p>You can access the materials either through the Google drive folder or the Github repo. Choose what you’re most comfortable with. We recommend creating a new RStudio project (.Rproj) for the workshop so that it’s easy to store the data and .Rmd files in the same directory.</p>
+<ul>
+<li>Google drive folder with all materials: https://tinyurl.com/USCOTS2025</li>
+<li>Github repo</li>
+</ul>
+</section>
 <section id="resources" class="level2">
 <h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>Here are additional resources that we found useful as we prepared to teach with {tidymodels}:</p>
 <ul>
 <li><a href="https://www.tidymodels.org/">{tidymodels} website</a>: The official website for the {tidymodels} ecosystem</li>
 <li><a href="https://www.tmwr.org/">Tidy Modeling with R</a>: Book by Max Kuhn and Julia Silge</li>
@@ -243,7 +266,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

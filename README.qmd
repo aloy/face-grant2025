@@ -45,6 +45,8 @@ You can access the materials either through the Google drive folder or the Githu
 
 ## Resources
 
+Here are additional resources that we found useful as we prepared to teach with {tidymodels}:
+
 * [{tidymodels} website](https://www.tidymodels.org/): The official website for the {tidymodels} ecosystem
 * [Tidy Modeling with R](https://www.tmwr.org/): Book by Max Kuhn and Julia Silge
 * [Julia Silge's blog](https://juliasilge.com/blog/): Blog posts on various {tidymodels} topics

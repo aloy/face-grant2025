@@ -4,28 +4,28 @@
     "href": "index.html",
     "title": "Teaching statistical learning: An active approach using R and {tidymodels}",
     "section": "",
-    "text": "Jaime Davila and Adam Loy\n\nJuly 15, 2025  1:00 – 4:15 pm  Location: Gerdin XXXX \n\n\n\n\nBefore arriving, please make sure you have an up-to-date installation of R and RStudio, and install the following packages: {tidymodels}, {tidyverse}. You can use the below code chunk to do this.\ninstall.packages(c(\"tidymodels\", \"tidyverse\"))\n\n\n\n\nIntroductions\nOverview of {tidymodels}\nActivity: KNN for regression/prediction\nActivity: KNN for classification\nBreak\nOverview of parameter tuning via cross validation and activity\nOverview of grid search and activity\nDebrief and Q&A\n\n\n\n\n\n{tidymodels} website: The official website for the {tidymodels} ecosystem\nTidy Modeling with R: Book by Max Kuhn and Julia Silge\nJulia Silge’s blog: Blog posts on various {tidymodels} topics\nTidy Tuesday"
+    "text": "Jaime Davila and Adam Loy\n\nJuly 15, 2025  1:00 – 4:15 pm  Location: Gerdin Business Building, Room 2464"
   },
   {
     "objectID": "index.html#before-the-workshop",
     "href": "index.html#before-the-workshop",
     "title": "Teaching statistical learning: An active approach using R and {tidymodels}",
-    "section": "",
-    "text": "Before arriving, please make sure you have an up-to-date installation of R and RStudio, and install the following packages: {tidymodels}, {tidyverse}. You can use the below code chunk to do this.\ninstall.packages(c(\"tidymodels\", \"tidyverse\"))"
+    "section": "Before the workshop",
+    "text": "Before the workshop\nBefore arriving, please make sure you have an up-to-date installation of R and RStudio, and install the following packages: {tidymodels}, {tidyverse}. You can use the below code chunk to do this.\n\ninstall.packages(c(\"tidymodels\", \"tidyverse\"))"
   },
   {
     "objectID": "index.html#agenda",
     "href": "index.html#agenda",
     "title": "Teaching statistical learning: An active approach using R and {tidymodels}",
-    "section": "",
-    "text": "Introductions\nOverview of {tidymodels}\nActivity: KNN for regression/prediction\nActivity: KNN for classification\nBreak\nOverview of parameter tuning via cross validation and activity\nOverview of grid search and activity\nDebrief and Q&A"
+    "section": "Agenda",
+    "text": "Agenda\n\nIntroductions\nOverview of {tidymodels}\nActivity: KNN for regression/prediction\nActivity: KNN for classification\nBreak\nOverview of parameter tuning via cross validation and activity\nOverview of grid search and activity\nDebrief and Q&A"
   },
   {
     "objectID": "index.html#resources",
     "href": "index.html#resources",
     "title": "Teaching statistical learning: An active approach using R and {tidymodels}",
-    "section": "",
-    "text": "{tidymodels} website: The official website for the {tidymodels} ecosystem\nTidy Modeling with R: Book by Max Kuhn and Julia Silge\nJulia Silge’s blog: Blog posts on various {tidymodels} topics\nTidy Tuesday"
+    "section": "Resources",
+    "text": "Resources\nHere are additional resources that we found useful as we prepared to teach with {tidymodels}:\n\n{tidymodels} website: The official website for the {tidymodels} ecosystem\nTidy Modeling with R: Book by Max Kuhn and Julia Silge\nJulia Silge’s blog: Blog posts on various {tidymodels} topics\nTidy Tuesday"
   },
   {
     "objectID": "materials/1_knn_prediction.html",
@@ -166,5 +166,12 @@
     "title": "Classification using KNN",
     "section": "Functions introduced",
     "text": "Functions introduced\n\ninitial_split(): Creates a training/testing split of a data set\ntraining(), testing(): Extracts the training and testing data sets from a split\nstep_normalize(all_numeric_predictors()): Standardizes all numeric predictors in a recipe\nstep_naomit(all_predictors()): Removes rows with missing values in a recipe\nprep(), bake(): Prepares a recipe and applies it to a data set\nconf_mat(), accuracy(), sensitivity(), specificity(): Functions to calculate confusion matrix, accuracy, sensitivity, and specificity"
+  },
+  {
+    "objectID": "index.html#workshop-materials",
+    "href": "index.html#workshop-materials",
+    "title": "Teaching statistical learning: An active approach using R and {tidymodels}",
+    "section": "Workshop materials",
+    "text": "Workshop materials\nYou can access the materials either through the Google drive folder or the Github repo. Choose what you’re most comfortable with. We recommend creating a new RStudio project (.Rproj) for the workshop so that it’s easy to store the data and .Rmd files in the same directory.\n\nGoogle drive folder with all materials: https://tinyurl.com/USCOTS2025\nGithub repo"
   }
 ]
